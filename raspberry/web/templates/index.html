@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monitor de Tempestade</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Monitor de Tempestade</h1>
+      <p class="sub">Desligamento automático de aparelhos · Arduino + Raspberry Pi</p>
+    </div>
+    <span id="conexao" class="chip">conectando…</span>
+  </header>
+
+  <main>
+    <section id="faixa" class="faixa nivel-0">
+      <div>
+        <span class="rotulo">Nível de risco</span>
+        <strong id="nivel">—</strong>
+        <span id="pontos" class="pontos"></span>
+      </div>
+      <div class="aparelhos">
+        <span class="rotulo">Aparelhos</span>
+        <strong id="aparelhos">—</strong>
+        <span id="modo" class="pontos"></span>
+      </div>
+    </section>
+
+    <section class="cards">
+      <article class="card"><span class="rotulo">Temperatura</span><strong id="temp">—</strong><span class="unidade">°C</span></article>
+      <article class="card"><span class="rotulo">Umidade do ar</span><strong id="umid">—</strong><span class="unidade">%</span></article>
+      <article class="card"><span class="rotulo">Chuva</span><strong id="chuva">—</strong><span class="unidade">0 seco · 1023 encharcado</span></article>
+    </section>
+
+    <section class="grade">
+      <article class="painel">
+        <div class="titulo-painel">
+          <h2>Chuva</h2>
+          <select id="periodo">
+            <option value="10">10 min</option>
+            <option value="30" selected>30 min</option>
+            <option value="120">2 h</option>
+            <option value="1440">24 h</option>
+          </select>
+        </div>
+        <div class="grafico"><canvas id="graficoChuva"></canvas></div>
+      </article>
+      <article class="painel">
+        <div class="titulo-painel"><h2>Temperatura e umidade</h2></div>
+        <div class="grafico"><canvas id="graficoClima"></canvas></div>
+      </article>
+    </section>
+
+    <section class="grade">
+      <article class="painel">
+        <h2>Controle</h2>
+        <div class="linha-botoes">
+          <button data-modo="auto" class="alternar">Automático</button>
+          <button data-modo="manual" class="alternar">Manual</button>
+        </div>
+        <p class="ajuda">No automático, o sistema desliga os aparelhos na tempestade e religa sozinho depois que o tempo melhora.</p>
+        <div class="linha-botoes">
+          <button id="ligar" class="acao ligar">Ligar aparelhos</button>
+          <button id="desligar" class="acao desligar">Desligar aparelhos</button>
+        </div>
+        <p class="ajuda">Ligar ou desligar por aqui coloca o sistema em modo manual.</p>
+
+        <h2 class="espaco">Limites</h2>
+        <form id="formLimites">
+          <label>Chuva a partir de <input type="number" name="limite_chuva" min="0" max="1023"></label>
+          <label>Subida de umidade <input type="number" name="subida_umidade" min="1" max="50"></label>
+          <label>Janela (s) <input type="number" name="janela_s" min="10" max="3600"></label>
+          <label>Religar após (s) <input type="number" name="religar_apos_s" min="5" max="3600"></label>
+          <label class="check"><input type="checkbox" name="exigir_queda_temp"> Umidade só conta se a temperatura cair</label>
+          <button type="submit" class="acao">Salvar limites</button>
+          <span id="msgLimites" class="ajuda"></span>
+        </form>
+      </article>
+
+      <article class="painel">
+        <h2>Histórico de eventos</h2>
+        <div class="tabela">
+          <table>
+            <thead><tr><th>Quando</th><th>Evento</th></tr></thead>
+            <tbody id="eventos"></tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='painel.js') }}"></script>
+</body>
+</html>
