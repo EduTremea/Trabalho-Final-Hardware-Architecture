@@ -1,13 +1,14 @@
 # Circuito no Wokwi
 
-Simulação do lado do Arduino no [Wokwi](https://wokwi.com). Para abrir, crie um projeto novo com Arduino Uno e cole o conteúdo de `diagram.json` e `sketch.ino` nas abas de mesmo nome. Depois, adicione a biblioteca **DHT sensor library** no Library Manager.
+Simulação do lado do Arduino no Wokwi: https://wokwi.com/projects/480346101763524609
+
+Para recriar do zero, crie um projeto novo com Arduino Uno e cole o conteúdo de `diagram.json` e `sketch.ino` nas abas de mesmo nome. Depois, adicione a biblioteca **DHT sensor library** no Library Manager.
 
 ## Ligações
 
 | Componente | Pino do Arduino |
 | --- | --- |
-| Módulo LDR (saída AO) | A0 |
-| Higrômetro / sensor de chuva | A1 |
+| Higrômetro (potenciômetro no Wokwi) | A1 |
 | DHT11 (DHT22 no Wokwi) | D2 |
 | Buzzer | D6 |
 | Relé (entrada IN) | D8 |
@@ -15,7 +16,7 @@ Simulação do lado do Arduino no [Wokwi](https://wokwi.com). Para abrir, crie u
 | LED amarelo (220 Ω) | D10 |
 | LED vermelho (220 Ω) | D11 |
 
-Todos os módulos são alimentados pelo 5V e GND do Arduino. No relé, o COM vai no 5V e o NO liga a carga de teste (um LED com resistor de 220 Ω), que representa os aparelhos.
+Todos os módulos são alimentados pelo 5V e GND do Arduino. No relé, o COM vai no 5V e o NO liga a carga de teste (um LED verde com resistor de 220 Ω), que representa a casa com energia.
 
 ## Diferenças para a montagem real
 
@@ -28,7 +29,7 @@ Todos os módulos são alimentados pelo 5V e GND do Arduino. No relé, o COM vai
 O Arduino envia a cada 2 segundos:
 
 ```
-L:620;T:24.0;U:78;C:310
+T:24.0;U:78;C:310
 ```
 
 E recebe do Raspberry Pi:
